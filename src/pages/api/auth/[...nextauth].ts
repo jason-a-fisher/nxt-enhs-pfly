@@ -1,5 +1,8 @@
 import NextAuth from "next-auth"
 import Providers from "next-auth/providers"
+import Credentials from "next-auth/providers/credentials";
+import AzureAD from "next-auth/providers/azure-ad";
+import Google from "next-auth/providers/google";
 
 export default NextAuth({
     pages: {
@@ -7,7 +10,7 @@ export default NextAuth({
     },
 
     providers: [
-        Providers.Credentials({
+        Credentials({
             // The name to display on the sign in form (e.g. 'Sign in with...')
             name: 'LocalUserLogin',
             // The credentials is used to generate a suitable form on the sign in page.
@@ -39,20 +42,19 @@ export default NextAuth({
                 return null
             }
         }),
-        Providers.AzureADB2C({
+        AzureAD({
             clientId: process.env.AZURE_ID,
             clientSecret: process.env.AZURE_CLIENT_SECRET,
-            scope: 'offline_access User.Read',
             tenantId: process.env.AZURE_TENANT_ID,
         }),
-        Providers.Google({
+        Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
     ],
 
     jwt: {
-        signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
-        encryption: false,
+        secret: process.env.JWT_SIGNING_PRIVATE_KEY,
+        maxAge: 60 * 60 * 24 * 30,
     }
 })

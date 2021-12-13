@@ -1,7 +1,7 @@
 
 import "@patternfly/react-core/dist/styles/base.css"
 
-import { Provider as NextAuthProvider }  from "next-auth/client"
+import { SessionProvider as NextAuthProvider }  from "next-auth/react"
 import { Provider as ReduxProvider } from 'react-redux'
 import type { AppProps } from 'next/app'
 

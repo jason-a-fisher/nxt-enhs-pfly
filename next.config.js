@@ -4,6 +4,7 @@ const withTM = require('next-transpile-modules')([
     '@patternfly/react-core',
     '@patternfly/react-styles',
     '@patternfly/react-table',
+    '@patternfly/react-core/node_modules/@patternfly/react-styles'
 ])
 
 module.exports = withTM({})
