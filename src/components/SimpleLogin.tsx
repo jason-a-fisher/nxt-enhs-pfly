@@ -14,13 +14,15 @@ import Image from 'next/image'
 
 const SimpleLogin:  React.FunctionComponent = () => {
    /* const [showHelperText, setShowHelperText] = useState(false);
-    const [username, setUsername] = useState("");
+    
     const [isValidUsername, setIsUsername] = useState(false);
 
-    const [password, setPassword] = useState("");
+    
     const [isValidPassword, setIsValidPassword] = useState(false);
 
     const [isRememberMeChecked, setIsRememberMeChecked] = useState(false);*/
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
 
     const brandImg = "https://www.patternfly.org/v4undefined";
 
@@ -91,6 +93,14 @@ const SimpleLogin:  React.FunctionComponent = () => {
 
     }
 
+    const handleUsernameChange = (value: string) => {
+        setUsername(value);
+    }
+
+    const handlePasswordChange = (value: string) => {
+        setPassword(value);
+    }
+
     const loginForm = (
         <LoginForm
             showHelperText={ false }
@@ -102,6 +112,10 @@ const SimpleLogin:  React.FunctionComponent = () => {
             onChangeRememberMe={ () => {} }
             onLoginButtonClick={ handleLoginButtonClick }
             loginButtonLabel="Log in"
+            usernameValue={username}
+            onChangeUsername={handleUsernameChange}
+            passwordValue={password}
+            onChangePassword={handlePasswordChange}
         />
     );
 
