@@ -8,19 +8,21 @@ import {
     LoginPage,
     ListItem, ListVariant, BackgroundImage
 } from '@patternfly/react-core';
-import {ExclamationCircleIcon} from '@patternfly/react-icons';
-import bgLogo from '@patternfly/react-styles/css/assets/images/pfbg_2000.jpg'
-import Image from 'next/image'
+import { ExclamationCircleIcon } from '@patternfly/react-icons';
+// import bgLogo from '@patternfly/react-styles/css/assets/images/pfbg_2000.jpg';
+
+import Image from 'next/image';
+import {useState} from "react";
 
 const SimpleLogin:  React.FunctionComponent = () => {
-   /* const [showHelperText, setShowHelperText] = useState(false);
-    const [username, setUsername] = useState("");
-    const [isValidUsername, setIsUsername] = useState(false);
+    const [showHelperText, setShowHelperText] = React.useState(false);
+    const [username, setUsername] = React.useState("");
+    const [isValidUsername, setIsUsername] = React.useState(false);
 
-    const [password, setPassword] = useState("");
-    const [isValidPassword, setIsValidPassword] = useState(false);
+    const [password, setPassword] = React.useState("");
+    const [isValidPassword, setIsValidPassword] = React.useState(false);
 
-    const [isRememberMeChecked, setIsRememberMeChecked] = useState(false);*/
+    const [isRememberMeChecked, setIsRememberMeChecked] = React.useState(false);
 
     const brandImg = "https://www.patternfly.org/v4undefined";
 
@@ -87,30 +89,49 @@ const SimpleLogin:  React.FunctionComponent = () => {
         </React.Fragment>
     );
 
-    const handleLoginButtonClick = () => {
+    const onLoginButtonClick = (e) => {
+        e.preventDefault();
 
+        console.log("FORM SUBMIT PRESSED");
+        document.getElementById("frmLogin");
+    }
+
+    const handleUsernameChange = (value: string) => {
+        setUsername(value);
+    }
+
+    const handlePasswordChange = (value: string) => {
+        setPassword(value);
     }
 
     const loginForm = (
         <LoginForm
-            showHelperText={ false }
+            encType="multipart/form-data"
+            showHelperText={ true }
             helperText={ helperText }
-            helperTextIcon={<ExclamationCircleIcon />}
+            helperTextIcon={ <ExclamationCircleIcon /> }
             usernameLabel="Username"
+            usernameValue={ username }
             passwordLabel="Password"
+            passwordValue={ password }
             rememberMeLabel="Keep me logged in for 30 days."
+            onChangeUsername={ handleUsernameChange }
+            onChangePassword={ handlePasswordChange }
             onChangeRememberMe={ () => {} }
-            onLoginButtonClick={ handleLoginButtonClick }
             loginButtonLabel="Log in"
+            name="frmLogin"
+            id="frmLogin"
+            method="post"
+            action="/api/auth/callback/credentials"
         />
     );
 
     const images = {
-        lg: '/assets/images/pfbg_2000.jpg',
-        sm: '/assets/images/pfbg_768.jpg',
-        sm2x: '/assets/images/pfbg_768@2x.jpg',
-        xs: '/assets/images/pfbg_576.jpg',
-        xs2x: '/assets/images/pfbg_576@2x.jpg'
+        lg: <Image src='/assets/images/pfbg_1200.jpg' />,
+        sm: <Image src='/assets/images/pfbg_768.jpg' />,
+        sm2x: <Image src='/assets/images/pfbg_768@2x.jpg' />,
+        xs: <Image src='/assets/images/pfbg_576.jpg' />,
+        xs2x: <Image src='/assets/images/pfbg_576@2x.jpg' />
     };
 
     return (
@@ -118,6 +139,7 @@ const SimpleLogin:  React.FunctionComponent = () => {
             footerListVariants={ ListVariant.inline }
             brandImgSrc={ brandImg }
             brandImgAlt="PatternFly logo"
+            // @ts-ignore
             backgroundImgSrc={ images }
             backgroundImgAlt="Images"
             footerListItems={ listItem }
